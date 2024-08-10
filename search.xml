@@ -1,64 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>CF644B题解</title>
-    <url>/2024/08/03/CF644B%E9%A2%98%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="cf644b模拟">CF644B（模拟）</h1>
-<h2 id="题目大意">题目大意：</h2>
-<p>给出 <span class="math inline">\(N\)</span>
-个工作申请以及它们的开始时间、所需时间。当出现一个工作申请时，如果生产线空闲就会直接执行，等待队列少于
-<span class="math inline">\(b\)</span>
-个工作会把当前申请加到生产线中，否则会拒绝申请，求每个工作的完成时间。</p>
-<h2 id="思路分析">思路分析：</h2>
-<p>很明显的一道模拟题。</p>
-<p>因为这道题 <span class="math inline">\(t_i \le
-10^9\)</span>，所以我们直接枚举时间是会超时的。我们可以只维护一个等待序列，先把最开头的一个工作拿出来执行，再枚举当前所有开始时间小于当前时间的工作，如果队列中已有
-<span class="math inline">\(b\)</span>
-个元素就拒绝掉，否则将它加入队列中，一直重复直到队列为空或工作已经枚举完为止。</p>
-<h2 id="注意事项">注意事项：</h2>
-<ol type="1">
-<li><p>如果当前队列为空，那么再开始执行工作前必须把下一个工作加到队列里（相当于直接执行）。</p></li>
-<li><p>由于本题 <span class="math inline">\(t_i,d_i \le
-10^9\)</span>，所以需要开 long long。</p></li>
-</ol>
-<h2 id="完整代码">完整代码：</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ll long long</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">200005</span>;</span><br><span class="line"><span class="type">int</span> n,b,p1=<span class="number">1</span>,p2=<span class="number">0</span>,q[N],d[N],t[N],p;</span><br><span class="line">ll T,ans[N];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;b);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;t[i],&amp;d[i]);</span><br><span class="line">	T=(ll)(t[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(p2&lt;p1&amp;&amp;p&lt;n)  q[++p2]=++p;<span class="comment">//如果队列为空则直接取出下一个工作执行</span></span><br><span class="line">		T=<span class="built_in">max</span>(T,(ll)(t[q[p1]])),T+=(ll)(d[q[p1]]),ans[q[p1]]=T,p1++;<span class="comment">//执行当前队列开头的工作</span></span><br><span class="line">		<span class="keyword">while</span>(p&lt;n&amp;&amp;(ll)(t[p<span class="number">+1</span>])&lt;T)&#123;</span><br><span class="line">			<span class="keyword">if</span>(p2-p1<span class="number">+1</span>&lt;b)  q[++p2]=++p;<span class="comment">//将工作加到队列中</span></span><br><span class="line">			<span class="keyword">else</span>  ans[++p]=<span class="number">-1</span>;<span class="comment">//拒绝当前工作</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(p==n&amp;&amp;p2&lt;p1)  <span class="keyword">break</span>;<span class="comment">//如果队列为空且没有剩余的工作就退出</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%lld &quot;</span>,ans[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>题解</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CF405B题解</title>
-    <url>/2024/08/02/CF405B%E9%A2%98%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="cf405b模拟">CF405B（模拟）</h1>
-<h2 id="题目大意">题目大意：</h2>
-<p>给出 <span class="math inline">\(N\)</span>
-个多米诺骨牌，同时推动一些骨牌，求最后有多少个骨牌保持竖立。</p>
-<h2 id="思路分析">思路分析：</h2>
-<p>我们可以分情况讨论骨牌竖立的情况。</p>
-<ol type="1">
-<li>骨牌左右都没有倒下的骨牌。</li>
-<li>骨牌左右倒下的骨牌数量相等。</li>
-</ol>
-<p>我们可以从左往右扫一遍，记录前面有多少个骨牌没有被推动。</p>
-<p>如果当前骨牌也没有被推动，那么我们把计数器加一；</p>
-<p>如果当前骨牌被推动了，那么我们再分情况讨论：</p>
-<ol type="1">
-<li><p>当前骨牌向右推动，前面的骨牌没有倒下时，我们把答案直接加上计数器；</p></li>
-<li><p>当前骨牌向左推动，前面有骨牌向右推动，那么我们判断计数器是否为奇数，如果是就把答案加一；</p></li>
-<li><p>对于其他情况，都不会影响答案。</p></li>
-</ol>
-<p>按照这样的方式扫一遍就可以得到答案。</p>
-<p><strong>注意：如果最后的几个骨牌没有被推动，仍然需要记算答案。</strong></p>
-<h2 id="完整代码">完整代码：</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">3005</span>;</span><br><span class="line"><span class="type">int</span> n,d[N],ans,dir,cnt;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">char</span> c;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d\n&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;c);</span><br><span class="line">		<span class="keyword">if</span>(c==<span class="string">&#x27;L&#x27;</span>)  d[i]=<span class="number">-1</span>;<span class="comment">//-1表示向左推，1表示向右推</span></span><br><span class="line">		<span class="keyword">if</span>(c==<span class="string">&#x27;R&#x27;</span>)  d[i]=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	dir=<span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(d[i]==<span class="number">0</span>)  cnt++;<span class="comment">//第一种情况</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(d[i]==<span class="number">-1</span>&amp;&amp;dir==<span class="number">1</span>)  ans+=cnt%<span class="number">2</span>;<span class="comment">//第二种情况</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(d[i]==<span class="number">1</span>&amp;&amp;dir==<span class="number">-1</span>)  ans+=cnt;<span class="comment">//第三种情况</span></span><br><span class="line">		<span class="keyword">if</span>(d[i]!=<span class="number">0</span>)  cnt=<span class="number">0</span>,dir=d[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(dir==<span class="number">-1</span>)  ans+=cnt;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>题解</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CF1031B题解</title>
     <url>/2024/08/02/CF1031B%E9%A2%98%E8%A7%A3/</url>
     <content><![CDATA[<h1 id="cf1031b枚举">CF1031B（枚举）</h1>
@@ -88,78 +30,6 @@ class="math inline">\(t_1\)</span>，然后只需要枚举后面的每个元素�
       </tags>
   </entry>
   <entry>
-    <title>CF958F1题解</title>
-    <url>/2024/08/01/CF958F1%E9%A2%98%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="cf958f1模拟">CF958F1（模拟）</h1>
-<h2 id="题目大意">题目大意：</h2>
-<p>给出 <span class="math inline">\(N\)</span> 个数和 <span
-class="math inline">\(M\)</span> 个要求，求一段区间，使得第 <span
-class="math inline">\(i\)</span> 种颜色的个数恰好等于第 <span
-class="math inline">\(i\)</span> 个要求。</p>
-<h2 id="思路分析">思路分析：</h2>
-<p>观察到这道题 <span class="math inline">\(N\)</span>、<span
-class="math inline">\(M \le 100\)</span>，所以我们可以直接暴力 <span
-class="math inline">\(O(N)\)</span> 枚举选中的区间，再 <span
-class="math inline">\(O(NM)\)</span> 检查当前区间是否符合要求。</p>
-<p>首先我们可以算出 <span class="math inline">\(k_1+k_2+...+k_m\)</span>
-的值，也就是区间的长度，然后我们再 <span
-class="math inline">\(O(N)\)</span>
-枚举区间左端点并算出右端点，然后对当前区间进行 <span
-class="math inline">\(M\)</span> 次遍历，每次检查有多少个人拿着第 <span
-class="math inline">\(i\)</span> 种颜色的剑，总时间复杂度 <span
-class="math inline">\(O(N^2M)\)</span>，可以通过本题。</p>
-<h2 id="完整代码">完整代码：</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> n,m,d[<span class="number">105</span>],k[<span class="number">105</span>],sum,cnt;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">bool</span> flag;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;d[i]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;k[i]);</span><br><span class="line">		sum+=k[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> l=<span class="number">1</span>,r;l&lt;=n;l++)&#123;<span class="comment">//枚举选中的区间</span></span><br><span class="line">		r=sum+l<span class="number">-1</span>,flag=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;<span class="comment">//检查当前区间是否符合要求</span></span><br><span class="line">			cnt=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> j=l;j&lt;=r;j++)</span><br><span class="line">				<span class="keyword">if</span>(d[j]==i)  cnt++;</span><br><span class="line">			<span class="keyword">if</span>(cnt!=k[i])&#123;</span><br><span class="line">				flag=<span class="number">0</span>;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(flag)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;YES&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;NO&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>题解</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CF1075B题解</title>
-    <url>/2024/08/01/CF1075B%E9%A2%98%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="cf1075b模拟">CF1075B（模拟）</h1>
-<h2 id="题目大意">题目大意：</h2>
-<p>给出 <span class="math inline">\(M\)</span> 个司机和 <span
-class="math inline">\(N\)</span>
-个乘客，每个人会叫离自己最近的出租车，求对于没辆出租车，有多少个乘客会叫它。</p>
-<h2 id="思路分析">思路分析：</h2>
-<p>首先我们可以想到对于每个乘客，暴力枚举每个司机，看哪个司机离自己最近。时间复杂度
-<span class="math inline">\(O(NM)\)</span>，会 TLE。</p>
-<p>考虑优化，因为每个乘客呼叫的司机一定是自己左右两边的司机中较近的一个，所以我们可以
-<span class="math inline">\(O(N)\)</span>
-预处理出每个乘客左右两边的司机，然后再 <span
-class="math inline">\(O(N)\)</span> 算出每个司机的答案就可以了。</p>
-<h2 id="完整代码">完整代码：</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">200005</span>;</span><br><span class="line"><span class="type">int</span> n,m,pos[N],d[N],ans[N],lst[N],nxt[N];</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">pos表示每个乘客、司机的位置</span></span><br><span class="line"><span class="comment">d表示当前位置是司机还是乘客</span></span><br><span class="line"><span class="comment">ans表示每个司机的答案</span></span><br><span class="line"><span class="comment">lst、nxt分别表示乘客前面、后面的第一个司机</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> t;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;pos[i]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;d[i]);</span><br><span class="line">		<span class="keyword">if</span>(d[i])  lst[i]=i;<span class="comment">//计算自己前面的第一个司机</span></span><br><span class="line">		<span class="keyword">else</span>  lst[i]=lst[i<span class="number">-1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=n+m;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line">		<span class="keyword">if</span>(d[i])  nxt[i]=i;<span class="comment">//计算自己后面的第一个司机</span></span><br><span class="line">		<span class="keyword">else</span>  nxt[i]=nxt[i<span class="number">+1</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(d[i])  <span class="keyword">continue</span>;<span class="comment">//分情况讨论计算答案</span></span><br><span class="line">		<span class="keyword">if</span>(lst[i]==<span class="number">0</span>)  t=nxt[i];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(nxt[i]==<span class="number">0</span>)  t=lst[i];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(pos[i]-pos[lst[i]]&lt;=pos[nxt[i]]-pos[i])  t=lst[i];</span><br><span class="line">		<span class="keyword">else</span>  t=nxt[i];</span><br><span class="line">		ans[t]++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)</span><br><span class="line">		<span class="keyword">if</span>(d[i])  <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,ans[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>题解</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CF413B题解</title>
-    <url>/2024/07/31/CF413B%E9%A2%98%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="cf413b模拟">CF413B（模拟）</h1>
-<h2 id="题目大意">题目大意：</h2>
-<p>有 <span class="math inline">\(N\)</span> 个人和 <span
-class="math inline">\(M\)</span> 个聊天室，给出 <span
-class="math inline">\(K\)</span> 条消息，求每个人收到的消息数量。</p>
-<h2 id="思路分析">思路分析：</h2>
-<p>首先可以想到对于每条消息，直接给当前聊天室的所有人暴力计算答案。</p>
-<p>时间复杂度：<span class="math inline">\(O(NK)\)</span>，由于 <span
-class="math inline">\(N \le 2 \times 10^4\)</span>，<span
-class="math inline">\(K \le 2 \times 10^5\)</span>，所以会 TLE。</p>
-<p>考虑优化，其实我们只需要记录每个聊天室有多少条消息，最后在计算每个人的消息条数就可以了，这样就可以通过本题。</p>
-<p>注意：由于每个人自己发的消息不能计入这个人的答案，所以还需要减去每个人自己发的消息。</p>
-<h2 id="完整代码">完整代码：</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> n,m,k,cnt1[<span class="number">15</span>],cnt2[<span class="number">20005</span>];<span class="comment">//cnt1表示每个聊天室的消息条数，cnt2表示每个人发的消息条数</span></span><br><span class="line"><span class="type">bool</span> d[<span class="number">20005</span>][<span class="number">15</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x,y,ans;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;m,&amp;k);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=m;j++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;d[i][j]);</span><br><span class="line">	<span class="keyword">while</span>(k--)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;x,&amp;y);</span><br><span class="line">		cnt1[y]++,cnt2[x]++;<span class="comment">//统计聊天室的消息数量和每个人发的消息数量</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		ans=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=m;j++)</span><br><span class="line">			<span class="keyword">if</span>(d[i][j])  ans+=cnt1[j];<span class="comment">//计算每个人收到的消息数量</span></span><br><span class="line">		ans-=cnt2[i];<span class="comment">//记得减掉自己发的消息</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,ans);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
-      <tags>
-        <tag>题解</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CF1218F题解</title>
     <url>/2024/07/30/CF1218F%E9%A2%98%E8%A7%A3/</url>
     <content><![CDATA[<h1 id="cf1218f贪心">CF1218F（贪心）</h1>
@@ -183,28 +53,22 @@ class="math inline">\(i\)</span>
       </tags>
   </entry>
   <entry>
-    <title>CF808C题解</title>
-    <url>/2024/07/27/CF808C%E9%A2%98%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="cf808c贪心">CF808C（贪心）</h1>
+    <title>CF1075B题解</title>
+    <url>/2024/08/01/CF1075B%E9%A2%98%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="cf1075b模拟">CF1075B（模拟）</h1>
 <h2 id="题目大意">题目大意：</h2>
-<p>给出数组 <span class="math inline">\(A\)</span> 和 <span
-class="math inline">\(w\)</span>，求一个数组 <span
-class="math inline">\(B\)</span>，满足：</p>
-<ul>
-<li><p><span class="math inline">\(B_i \ge \lceil \frac{a}{b}
-\rceil\)</span></p></li>
-<li><p><span class="math inline">\(\sum_{i=1}^{n} B_i =
-w\)</span></p></li>
-<li><p>对于所有 <span class="math inline">\(A_i&gt;A_j\)</span>，满足
-<span class="math inline">\(B_i \ge B_j\)</span></p></li>
-</ul>
+<p>给出 <span class="math inline">\(M\)</span> 个司机和 <span
+class="math inline">\(N\)</span>
+个乘客，每个人会叫离自己最近的出租车，求对于没辆出租车，有多少个乘客会叫它。</p>
 <h2 id="思路分析">思路分析：</h2>
-<p>本题可以明显看出来是一个贪心。</p>
-<p>首先我们可以将 <span class="math inline">\(A\)</span>
-数组从小到大（或从大到小）排序，然后每一个杯子先加刚好一半的酒，如果酒不够就说明无解。</p>
-<p>如果此时还有剩余的酒，就从最大的杯子开始加，加到最大，这样可以保证答案合法。</p>
+<p>首先我们可以想到对于每个乘客，暴力枚举每个司机，看哪个司机离自己最近。时间复杂度
+<span class="math inline">\(O(NM)\)</span>，会 TLE。</p>
+<p>考虑优化，因为每个乘客呼叫的司机一定是自己左右两边的司机中较近的一个，所以我们可以
+<span class="math inline">\(O(N)\)</span>
+预处理出每个乘客左右两边的司机，然后再 <span
+class="math inline">\(O(N)\)</span> 算出每个司机的答案就可以了。</p>
 <h2 id="完整代码">完整代码：</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">st</span>&#123;</span><br><span class="line">	<span class="type">int</span> v1,v2,pos;<span class="comment">//v1表示当前杯子有多少酒，v2表示杯子容量，pos表示杯子编号</span></span><br><span class="line">	<span class="type">bool</span> <span class="keyword">operator</span> &lt;(st oth)&#123;</span><br><span class="line">		<span class="keyword">return</span> v2&lt;oth.v2;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">st A[<span class="number">105</span>];</span><br><span class="line"><span class="type">int</span> n,w,d[<span class="number">105</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;w);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;A[i].v2);</span><br><span class="line">		A[i].pos=i,A[i].v1=(A[i].v2<span class="number">+1</span>)/<span class="number">2</span>,w-=A[i].v1;<span class="comment">//每个杯子先加一半的酒</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(A<span class="number">+1</span>,A<span class="number">+1</span>+n);</span><br><span class="line">	<span class="keyword">if</span>(w&lt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;-1&quot;</span>);<span class="comment">//判断无解</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=n;i&gt;=<span class="number">1</span>&amp;&amp;w;i--)<span class="comment">//如果酒还有剩余就从后往前加</span></span><br><span class="line">		<span class="keyword">if</span>(A[i].v1+w&lt;=A[i].v2)  A[i].v1+=w,w=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">else</span>  w-=(A[i].v2-A[i].v1),A[i].v1=A[i].v2;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="comment">//记录答案</span></span><br><span class="line">		d[A[i].pos]=A[i].v1;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,d[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">200005</span>;</span><br><span class="line"><span class="type">int</span> n,m,pos[N],d[N],ans[N],lst[N],nxt[N];</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">pos表示每个乘客、司机的位置</span></span><br><span class="line"><span class="comment">d表示当前位置是司机还是乘客</span></span><br><span class="line"><span class="comment">ans表示每个司机的答案</span></span><br><span class="line"><span class="comment">lst、nxt分别表示乘客前面、后面的第一个司机</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> t;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;pos[i]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;d[i]);</span><br><span class="line">		<span class="keyword">if</span>(d[i])  lst[i]=i;<span class="comment">//计算自己前面的第一个司机</span></span><br><span class="line">		<span class="keyword">else</span>  lst[i]=lst[i<span class="number">-1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=n+m;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line">		<span class="keyword">if</span>(d[i])  nxt[i]=i;<span class="comment">//计算自己后面的第一个司机</span></span><br><span class="line">		<span class="keyword">else</span>  nxt[i]=nxt[i<span class="number">+1</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(d[i])  <span class="keyword">continue</span>;<span class="comment">//分情况讨论计算答案</span></span><br><span class="line">		<span class="keyword">if</span>(lst[i]==<span class="number">0</span>)  t=nxt[i];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(nxt[i]==<span class="number">0</span>)  t=lst[i];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(pos[i]-pos[lst[i]]&lt;=pos[nxt[i]]-pos[i])  t=lst[i];</span><br><span class="line">		<span class="keyword">else</span>  t=nxt[i];</span><br><span class="line">		ans[t]++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)</span><br><span class="line">		<span class="keyword">if</span>(d[i])  <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,ans[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>题解</tag>
@@ -241,36 +105,108 @@ class="math inline">\(M\)</span>
       </tags>
   </entry>
   <entry>
-    <title>CF960B题解</title>
-    <url>/2024/07/22/CF960B%E9%A2%98%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="cf960b模拟">CF960B（模拟）</h1>
+    <title>CF405B题解</title>
+    <url>/2024/08/02/CF405B%E9%A2%98%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="cf405b模拟">CF405B（模拟）</h1>
 <h2 id="题目大意">题目大意：</h2>
-<p>给出 <span class="math inline">\(A\)</span>、<span
-class="math inline">\(B\)</span>
-两个数组，分别对其<strong>恰好</strong>进行 <span
-class="math inline">\(k_1\)</span>、<span
-class="math inline">\(k_2\)</span>
-次操作，每次操作可以将一个元素加一或减一，求 <span
-class="math inline">\(\sum_{i=1}^{n} (a_i-b_i)^2\)</span> 的最小值。</p>
+<p>给出 <span class="math inline">\(N\)</span>
+个多米诺骨牌，同时推动一些骨牌，求最后有多少个骨牌保持竖立。</p>
 <h2 id="思路分析">思路分析：</h2>
-<p>首先因为 <span class="math inline">\(A\)</span> 数组减一和 <span
-class="math inline">\(B\)</span>
-数组加一对答案来说是等价的，所以可以直接算 <span
-class="math inline">\(k_1+k_2\)</span> 次操作。</p>
-<p>因为我们要算 <span class="math inline">\(A\)</span>、<span
-class="math inline">\(B\)</span>
-数组对应元素差的平方和最小值，所以我们可以贪心来做，每次选取差最大的两个对应元素减一，最后再算答案。这一步可以用
-priority_queue 实现。</p>
-<h3 id="注意事项">注意事项：</h3>
+<p>我们可以分情况讨论骨牌竖立的情况。</p>
 <ol type="1">
-<li><p>由于需要进行<strong>恰好</strong> <span
-class="math inline">\(k_1+k_2\)</span>
-次操作，所以如果当前所有元素差都为 <span
-class="math inline">\(0\)</span>，也只能加一。</p></li>
-<li><p>十年 OI 一场空，不开 long long 见祖宗。</p></li>
+<li>骨牌左右都没有倒下的骨牌。</li>
+<li>骨牌左右倒下的骨牌数量相等。</li>
+</ol>
+<p>我们可以从左往右扫一遍，记录前面有多少个骨牌没有被推动。</p>
+<p>如果当前骨牌也没有被推动，那么我们把计数器加一；</p>
+<p>如果当前骨牌被推动了，那么我们再分情况讨论：</p>
+<ol type="1">
+<li><p>当前骨牌向右推动，前面的骨牌没有倒下时，我们把答案直接加上计数器；</p></li>
+<li><p>当前骨牌向左推动，前面有骨牌向右推动，那么我们判断计数器是否为奇数，如果是就把答案加一；</p></li>
+<li><p>对于其他情况，都不会影响答案。</p></li>
+</ol>
+<p>按照这样的方式扫一遍就可以得到答案。</p>
+<p><strong>注意：如果最后的几个骨牌没有被推动，仍然需要记算答案。</strong></p>
+<h2 id="完整代码">完整代码：</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">3005</span>;</span><br><span class="line"><span class="type">int</span> n,d[N],ans,dir,cnt;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">char</span> c;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d\n&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;c);</span><br><span class="line">		<span class="keyword">if</span>(c==<span class="string">&#x27;L&#x27;</span>)  d[i]=<span class="number">-1</span>;<span class="comment">//-1表示向左推，1表示向右推</span></span><br><span class="line">		<span class="keyword">if</span>(c==<span class="string">&#x27;R&#x27;</span>)  d[i]=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	dir=<span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(d[i]==<span class="number">0</span>)  cnt++;<span class="comment">//第一种情况</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(d[i]==<span class="number">-1</span>&amp;&amp;dir==<span class="number">1</span>)  ans+=cnt%<span class="number">2</span>;<span class="comment">//第二种情况</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(d[i]==<span class="number">1</span>&amp;&amp;dir==<span class="number">-1</span>)  ans+=cnt;<span class="comment">//第三种情况</span></span><br><span class="line">		<span class="keyword">if</span>(d[i]!=<span class="number">0</span>)  cnt=<span class="number">0</span>,dir=d[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(dir==<span class="number">-1</span>)  ans+=cnt;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>题解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CF644B题解</title>
+    <url>/2024/08/03/CF644B%E9%A2%98%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="cf644b模拟">CF644B（模拟）</h1>
+<h2 id="题目大意">题目大意：</h2>
+<p>给出 <span class="math inline">\(N\)</span>
+个工作申请以及它们的开始时间、所需时间。当出现一个工作申请时，如果生产线空闲就会直接执行，等待队列少于
+<span class="math inline">\(b\)</span>
+个工作会把当前申请加到生产线中，否则会拒绝申请，求每个工作的完成时间。</p>
+<h2 id="思路分析">思路分析：</h2>
+<p>很明显的一道模拟题。</p>
+<p>因为这道题 <span class="math inline">\(t_i \le
+10^9\)</span>，所以我们直接枚举时间是会超时的。我们可以只维护一个等待序列，先把最开头的一个工作拿出来执行，再枚举当前所有开始时间小于当前时间的工作，如果队列中已有
+<span class="math inline">\(b\)</span>
+个元素就拒绝掉，否则将它加入队列中，一直重复直到队列为空或工作已经枚举完为止。</p>
+<h2 id="注意事项">注意事项：</h2>
+<ol type="1">
+<li><p>如果当前队列为空，那么再开始执行工作前必须把下一个工作加到队列里（相当于直接执行）。</p></li>
+<li><p>由于本题 <span class="math inline">\(t_i,d_i \le
+10^9\)</span>，所以需要开 long long。</p></li>
 </ol>
 <h2 id="完整代码">完整代码：</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ll long long<span class="comment">//记得开long long</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> n,A[<span class="number">1005</span>],B[<span class="number">1005</span>],k1,k2;</span><br><span class="line">priority_queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> t;</span><br><span class="line">	ll ans=<span class="number">0ll</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;k1,&amp;k2);</span><br><span class="line">	k1+=k2;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;A[i]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;B[i]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="comment">//将每组元素的差放进优先队列里</span></span><br><span class="line">		q.<span class="built_in">push</span>(<span class="built_in">abs</span>(A[i]-B[i]));</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=k1;i++)&#123;</span><br><span class="line">		t=q.<span class="built_in">top</span>();<span class="comment">//贪心选取差最大的一组元素</span></span><br><span class="line">		q.<span class="built_in">pop</span>();</span><br><span class="line">		<span class="keyword">if</span>(t&gt;<span class="number">0</span>)  t--;</span><br><span class="line">		<span class="keyword">else</span>  t++;<span class="comment">//如果所有元素差都为0也只能加一</span></span><br><span class="line">		q.<span class="built_in">push</span>(t);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		t=q.<span class="built_in">top</span>();<span class="comment">//计算答案</span></span><br><span class="line">		q.<span class="built_in">pop</span>();</span><br><span class="line">		ans+=(ll)(t)*(ll)(t);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ll long long</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">200005</span>;</span><br><span class="line"><span class="type">int</span> n,b,p1=<span class="number">1</span>,p2=<span class="number">0</span>,q[N],d[N],t[N],p;</span><br><span class="line">ll T,ans[N];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;b);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;t[i],&amp;d[i]);</span><br><span class="line">	T=(ll)(t[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(p2&lt;p1&amp;&amp;p&lt;n)  q[++p2]=++p;<span class="comment">//如果队列为空则直接取出下一个工作执行</span></span><br><span class="line">		T=<span class="built_in">max</span>(T,(ll)(t[q[p1]])),T+=(ll)(d[q[p1]]),ans[q[p1]]=T,p1++;<span class="comment">//执行当前队列开头的工作</span></span><br><span class="line">		<span class="keyword">while</span>(p&lt;n&amp;&amp;(ll)(t[p<span class="number">+1</span>])&lt;T)&#123;</span><br><span class="line">			<span class="keyword">if</span>(p2-p1<span class="number">+1</span>&lt;b)  q[++p2]=++p;<span class="comment">//将工作加到队列中</span></span><br><span class="line">			<span class="keyword">else</span>  ans[++p]=<span class="number">-1</span>;<span class="comment">//拒绝当前工作</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(p==n&amp;&amp;p2&lt;p1)  <span class="keyword">break</span>;<span class="comment">//如果队列为空且没有剩余的工作就退出</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%lld &quot;</span>,ans[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>题解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CF808C题解</title>
+    <url>/2024/07/27/CF808C%E9%A2%98%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="cf808c贪心">CF808C（贪心）</h1>
+<h2 id="题目大意">题目大意：</h2>
+<p>给出数组 <span class="math inline">\(A\)</span> 和 <span
+class="math inline">\(w\)</span>，求一个数组 <span
+class="math inline">\(B\)</span>，满足：</p>
+<ul>
+<li><p><span class="math inline">\(B_i \ge \lceil \frac{a}{b}
+\rceil\)</span></p></li>
+<li><p><span class="math inline">\(\sum_{i=1}^{n} B_i =
+w\)</span></p></li>
+<li><p>对于所有 <span class="math inline">\(A_i&gt;A_j\)</span>，满足
+<span class="math inline">\(B_i \ge B_j\)</span></p></li>
+</ul>
+<h2 id="思路分析">思路分析：</h2>
+<p>本题可以明显看出来是一个贪心。</p>
+<p>首先我们可以将 <span class="math inline">\(A\)</span>
+数组从小到大（或从大到小）排序，然后每一个杯子先加刚好一半的酒，如果酒不够就说明无解。</p>
+<p>如果此时还有剩余的酒，就从最大的杯子开始加，加到最大，这样可以保证答案合法。</p>
+<h2 id="完整代码">完整代码：</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">st</span>&#123;</span><br><span class="line">	<span class="type">int</span> v1,v2,pos;<span class="comment">//v1表示当前杯子有多少酒，v2表示杯子容量，pos表示杯子编号</span></span><br><span class="line">	<span class="type">bool</span> <span class="keyword">operator</span> &lt;(st oth)&#123;</span><br><span class="line">		<span class="keyword">return</span> v2&lt;oth.v2;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">st A[<span class="number">105</span>];</span><br><span class="line"><span class="type">int</span> n,w,d[<span class="number">105</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;w);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;A[i].v2);</span><br><span class="line">		A[i].pos=i,A[i].v1=(A[i].v2<span class="number">+1</span>)/<span class="number">2</span>,w-=A[i].v1;<span class="comment">//每个杯子先加一半的酒</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">sort</span>(A<span class="number">+1</span>,A<span class="number">+1</span>+n);</span><br><span class="line">	<span class="keyword">if</span>(w&lt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;-1&quot;</span>);<span class="comment">//判断无解</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=n;i&gt;=<span class="number">1</span>&amp;&amp;w;i--)<span class="comment">//如果酒还有剩余就从后往前加</span></span><br><span class="line">		<span class="keyword">if</span>(A[i].v1+w&lt;=A[i].v2)  A[i].v1+=w,w=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">else</span>  w-=(A[i].v2-A[i].v1),A[i].v1=A[i].v2;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="comment">//记录答案</span></span><br><span class="line">		d[A[i].pos]=A[i].v1;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,d[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>题解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CF413B题解</title>
+    <url>/2024/07/31/CF413B%E9%A2%98%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="cf413b模拟">CF413B（模拟）</h1>
+<h2 id="题目大意">题目大意：</h2>
+<p>有 <span class="math inline">\(N\)</span> 个人和 <span
+class="math inline">\(M\)</span> 个聊天室，给出 <span
+class="math inline">\(K\)</span> 条消息，求每个人收到的消息数量。</p>
+<h2 id="思路分析">思路分析：</h2>
+<p>首先可以想到对于每条消息，直接给当前聊天室的所有人暴力计算答案。</p>
+<p>时间复杂度：<span class="math inline">\(O(NK)\)</span>，由于 <span
+class="math inline">\(N \le 2 \times 10^4\)</span>，<span
+class="math inline">\(K \le 2 \times 10^5\)</span>，所以会 TLE。</p>
+<p>考虑优化，其实我们只需要记录每个聊天室有多少条消息，最后在计算每个人的消息条数就可以了，这样就可以通过本题。</p>
+<p>注意：由于每个人自己发的消息不能计入这个人的答案，所以还需要减去每个人自己发的消息。</p>
+<h2 id="完整代码">完整代码：</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> n,m,k,cnt1[<span class="number">15</span>],cnt2[<span class="number">20005</span>];<span class="comment">//cnt1表示每个聊天室的消息条数，cnt2表示每个人发的消息条数</span></span><br><span class="line"><span class="type">bool</span> d[<span class="number">20005</span>][<span class="number">15</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x,y,ans;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;m,&amp;k);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=m;j++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;d[i][j]);</span><br><span class="line">	<span class="keyword">while</span>(k--)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;x,&amp;y);</span><br><span class="line">		cnt1[y]++,cnt2[x]++;<span class="comment">//统计聊天室的消息数量和每个人发的消息数量</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		ans=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=m;j++)</span><br><span class="line">			<span class="keyword">if</span>(d[i][j])  ans+=cnt1[j];<span class="comment">//计算每个人收到的消息数量</span></span><br><span class="line">		ans-=cnt2[i];<span class="comment">//记得减掉自己发的消息</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,ans);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>题解</tag>
@@ -308,6 +244,34 @@ class="math inline">\(25\)</span>
 <code>?</code> 就统计答案。</p>
 <h2 id="完整代码">完整代码：</h2>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> n,d[<span class="number">27</span>],len,ans,cnt1,cnt2,t;</span><br><span class="line"><span class="type">char</span> c,s[<span class="number">100005</span>];</span><br><span class="line"><span class="type">bool</span> flag,vis[<span class="number">27</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	n--;</span><br><span class="line">	<span class="keyword">while</span>(n--)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;\n%c %s&quot;</span>,&amp;c,s<span class="number">+1</span>);</span><br><span class="line">		<span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="built_in">sizeof</span>(vis));</span><br><span class="line">		len=<span class="built_in">strlen</span>(s<span class="number">+1</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=len;i++)</span><br><span class="line">			vis[<span class="built_in">int</span>(s[i])-<span class="string">&#x27;a&#x27;</span>]=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(flag&amp;&amp;(c==<span class="string">&#x27;!&#x27;</span>||c==<span class="string">&#x27;?&#x27;</span>))  ans++;</span><br><span class="line">		<span class="keyword">if</span>(c==<span class="string">&#x27;!&#x27;</span>)</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)&#123;</span><br><span class="line">				<span class="keyword">if</span>(!vis[i])  d[i]=<span class="number">-1</span>;</span><br><span class="line">				<span class="keyword">if</span>(vis[i]&amp;&amp;(d[i]==<span class="number">0</span>||d[i]==<span class="number">1</span>))  d[i]=<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span>(c==<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">				<span class="keyword">if</span>(vis[i])  d[i]=<span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">if</span>(c==<span class="string">&#x27;?&#x27;</span>)  d[s[<span class="number">1</span>]-<span class="string">&#x27;a&#x27;</span>]=<span class="number">-1</span>;</span><br><span class="line">		cnt1=cnt2=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(d[i]==<span class="number">1</span>)  cnt1++;</span><br><span class="line">			<span class="keyword">if</span>(d[i]==<span class="number">-1</span>)  cnt2++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(cnt1==<span class="number">1</span>||cnt2==<span class="number">25</span>)  flag=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>题解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CF958F1题解</title>
+    <url>/2024/08/01/CF958F1%E9%A2%98%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="cf958f1模拟">CF958F1（模拟）</h1>
+<h2 id="题目大意">题目大意：</h2>
+<p>给出 <span class="math inline">\(N\)</span> 个数和 <span
+class="math inline">\(M\)</span> 个要求，求一段区间，使得第 <span
+class="math inline">\(i\)</span> 种颜色的个数恰好等于第 <span
+class="math inline">\(i\)</span> 个要求。</p>
+<h2 id="思路分析">思路分析：</h2>
+<p>观察到这道题 <span class="math inline">\(N\)</span>、<span
+class="math inline">\(M \le 100\)</span>，所以我们可以直接暴力 <span
+class="math inline">\(O(N)\)</span> 枚举选中的区间，再 <span
+class="math inline">\(O(NM)\)</span> 检查当前区间是否符合要求。</p>
+<p>首先我们可以算出 <span class="math inline">\(k_1+k_2+...+k_m\)</span>
+的值，也就是区间的长度，然后我们再 <span
+class="math inline">\(O(N)\)</span>
+枚举区间左端点并算出右端点，然后对当前区间进行 <span
+class="math inline">\(M\)</span> 次遍历，每次检查有多少个人拿着第 <span
+class="math inline">\(i\)</span> 种颜色的剑，总时间复杂度 <span
+class="math inline">\(O(N^2M)\)</span>，可以通过本题。</p>
+<h2 id="完整代码">完整代码：</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> n,m,d[<span class="number">105</span>],k[<span class="number">105</span>],sum,cnt;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">bool</span> flag;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;d[i]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;k[i]);</span><br><span class="line">		sum+=k[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> l=<span class="number">1</span>,r;l&lt;=n;l++)&#123;<span class="comment">//枚举选中的区间</span></span><br><span class="line">		r=sum+l<span class="number">-1</span>,flag=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;<span class="comment">//检查当前区间是否符合要求</span></span><br><span class="line">			cnt=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> j=l;j&lt;=r;j++)</span><br><span class="line">				<span class="keyword">if</span>(d[j]==i)  cnt++;</span><br><span class="line">			<span class="keyword">if</span>(cnt!=k[i])&#123;</span><br><span class="line">				flag=<span class="number">0</span>;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(flag)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;YES&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;NO&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>题解</tag>
@@ -352,6 +316,42 @@ class="math inline">\(N\)</span>，记录的内容和第一遍相同。</p>
 <p>这部分比较简单，枚举 vis 数组中所有状态记录答案。</p>
 <h2 id="完整代码">完整代码：</h2>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> n,A[<span class="number">25</span>],p,ans;</span><br><span class="line"><span class="type">bool</span> vis[<span class="number">2100000</span>];</span><br><span class="line">map&lt;<span class="type">int</span>,<span class="type">int</span>&gt; m;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; v[<span class="number">2100000</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> c,<span class="type">int</span> d)</span></span>&#123;<span class="comment">//a表示当前位置，b表示结束位置，c表示搜索出来的差，d表示状压后的状态</span></span><br><span class="line">	<span class="keyword">if</span>(a==b<span class="number">+1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a!=n<span class="number">+1</span>)&#123;<span class="comment">//第一遍 DFS 后记录答案</span></span><br><span class="line">			<span class="keyword">if</span>(!m[c])  m[c]=++p;</span><br><span class="line">			v[m[c]].<span class="built_in">push_back</span>(d);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;<span class="comment">//第二遍 DFS 后记录答案</span></span><br><span class="line">			<span class="type">int</span> t=m[c];</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">auto</span> i:v[t])</span><br><span class="line">				vis[i|d]=<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">dfs</span>(a<span class="number">+1</span>,b,c,d);<span class="comment">//枚举三种情况</span></span><br><span class="line">	<span class="built_in">dfs</span>(a<span class="number">+1</span>,b,c+A[a],d|(<span class="number">1</span>&lt;&lt;a));</span><br><span class="line">	<span class="built_in">dfs</span>(a<span class="number">+1</span>,b,c-A[a],d|(<span class="number">1</span>&lt;&lt;a));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;A[i]);</span><br><span class="line">	<span class="type">int</span> mid=(<span class="number">1</span>+n)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">dfs</span>(<span class="number">1</span>,mid,<span class="number">0</span>,<span class="number">0</span>);<span class="comment">//第一次搜索</span></span><br><span class="line">	<span class="built_in">dfs</span>(mid<span class="number">+1</span>,n,<span class="number">0</span>,<span class="number">0</span>);<span class="comment">//第二次搜索</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=(<span class="number">1</span>&lt;&lt;n<span class="number">+1</span>);i++)</span><br><span class="line">		ans+=vis[i];<span class="comment">//计算答案</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <tags>
+        <tag>题解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CF960B题解</title>
+    <url>/2024/07/22/CF960B%E9%A2%98%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="cf960b模拟">CF960B（模拟）</h1>
+<h2 id="题目大意">题目大意：</h2>
+<p>给出 <span class="math inline">\(A\)</span>、<span
+class="math inline">\(B\)</span>
+两个数组，分别对其<strong>恰好</strong>进行 <span
+class="math inline">\(k_1\)</span>、<span
+class="math inline">\(k_2\)</span>
+次操作，每次操作可以将一个元素加一或减一，求 <span
+class="math inline">\(\sum_{i=1}^{n} (a_i-b_i)^2\)</span> 的最小值。</p>
+<h2 id="思路分析">思路分析：</h2>
+<p>首先因为 <span class="math inline">\(A\)</span> 数组减一和 <span
+class="math inline">\(B\)</span>
+数组加一对答案来说是等价的，所以可以直接算 <span
+class="math inline">\(k_1+k_2\)</span> 次操作。</p>
+<p>因为我们要算 <span class="math inline">\(A\)</span>、<span
+class="math inline">\(B\)</span>
+数组对应元素差的平方和最小值，所以我们可以贪心来做，每次选取差最大的两个对应元素减一，最后再算答案。这一步可以用
+priority_queue 实现。</p>
+<h3 id="注意事项">注意事项：</h3>
+<ol type="1">
+<li><p>由于需要进行<strong>恰好</strong> <span
+class="math inline">\(k_1+k_2\)</span>
+次操作，所以如果当前所有元素差都为 <span
+class="math inline">\(0\)</span>，也只能加一。</p></li>
+<li><p>十年 OI 一场空，不开 long long 见祖宗。</p></li>
+</ol>
+<h2 id="完整代码">完整代码：</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ll long long<span class="comment">//记得开long long</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> n,A[<span class="number">1005</span>],B[<span class="number">1005</span>],k1,k2;</span><br><span class="line">priority_queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> t;</span><br><span class="line">	ll ans=<span class="number">0ll</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;k1,&amp;k2);</span><br><span class="line">	k1+=k2;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;A[i]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;B[i]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="comment">//将每组元素的差放进优先队列里</span></span><br><span class="line">		q.<span class="built_in">push</span>(<span class="built_in">abs</span>(A[i]-B[i]));</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=k1;i++)&#123;</span><br><span class="line">		t=q.<span class="built_in">top</span>();<span class="comment">//贪心选取差最大的一组元素</span></span><br><span class="line">		q.<span class="built_in">pop</span>();</span><br><span class="line">		<span class="keyword">if</span>(t&gt;<span class="number">0</span>)  t--;</span><br><span class="line">		<span class="keyword">else</span>  t++;<span class="comment">//如果所有元素差都为0也只能加一</span></span><br><span class="line">		q.<span class="built_in">push</span>(t);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		t=q.<span class="built_in">top</span>();<span class="comment">//计算答案</span></span><br><span class="line">		q.<span class="built_in">pop</span>();</span><br><span class="line">		ans+=(ll)(t)*(ll)(t);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <tags>
         <tag>题解</tag>
