@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>CF1075B题解 | YuWenbo&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="CF1075B（模拟）题目大意：给出 $M$ 个司机和 $N$ 个乘客，每个人会叫离自己最近的出租车，求对于没辆出租车，有多少个乘客会叫它。 思路分析：首先我们可以想到对于每个乘客，暴力枚举每个司机，看哪个司机离自己最近。时间复杂度 $O(NM)$，会 TLE。 考虑优化，因为每个乘客呼叫的司机一定是自己左右两边的司机中较近的一个，所以我们可以 $O(N)$ 预处理出每个乘客左右两边的司机，然后再">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CF1075B题解">
+<meta property="og:url" content="http://ywb-33.github.io/2024/08/01/CF1075B%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="YuWenbo&#39;s blog">
+<meta property="og:description" content="CF1075B（模拟）题目大意：给出 $M$ 个司机和 $N$ 个乘客，每个人会叫离自己最近的出租车，求对于没辆出租车，有多少个乘客会叫它。 思路分析：首先我们可以想到对于每个乘客，暴力枚举每个司机，看哪个司机离自己最近。时间复杂度 $O(NM)$，会 TLE。 考虑优化，因为每个乘客呼叫的司机一定是自己左右两边的司机中较近的一个，所以我们可以 $O(N)$ 预处理出每个乘客左右两边的司机，然后再">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-08-01T12:35:00.000Z">
+<meta property="article:modified_time" content="2024-08-10T05:38:56.839Z">
+<meta property="article:author" content="YuWenbo">
+<meta property="article:tag" content="题解">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="YuWenbo's blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">YuWenbo&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个蒟蒻的博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ywb-33.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-CF1075B题解" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/08/01/CF1075B%E9%A2%98%E8%A7%A3/" class="article-date">
+  <time class="dt-published" datetime="2024-08-01T12:35:00.000Z" itemprop="datePublished">2024-08-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      CF1075B题解
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="CF1075B（模拟）"><a href="#CF1075B（模拟）" class="headerlink" title="CF1075B（模拟）"></a>CF1075B（模拟）</h1><h2 id="题目大意："><a href="#题目大意：" class="headerlink" title="题目大意："></a>题目大意：</h2><p>给出 $M$ 个司机和 $N$ 个乘客，每个人会叫离自己最近的出租车，求对于没辆出租车，有多少个乘客会叫它。</p>
+<h2 id="思路分析："><a href="#思路分析：" class="headerlink" title="思路分析："></a>思路分析：</h2><p>首先我们可以想到对于每个乘客，暴力枚举每个司机，看哪个司机离自己最近。时间复杂度 $O(NM)$，会 TLE。</p>
+<p>考虑优化，因为每个乘客呼叫的司机一定是自己左右两边的司机中较近的一个，所以我们可以 $O(N)$ 预处理出每个乘客左右两边的司机，然后再 $O(N)$ 算出每个司机的答案就可以了。</p>
+<h2 id="完整代码："><a href="#完整代码：" class="headerlink" title="完整代码："></a>完整代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">200005</span>;</span><br><span class="line"><span class="type">int</span> n,m,pos[N],d[N],ans[N],lst[N],nxt[N];</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">pos表示每个乘客、司机的位置</span></span><br><span class="line"><span class="comment">d表示当前位置是司机还是乘客</span></span><br><span class="line"><span class="comment">ans表示每个司机的答案</span></span><br><span class="line"><span class="comment">lst、nxt分别表示乘客前面、后面的第一个司机</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> t;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;pos[i]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;d[i]);</span><br><span class="line">		<span class="keyword">if</span>(d[i])  lst[i]=i;<span class="comment">//计算自己前面的第一个司机</span></span><br><span class="line">		<span class="keyword">else</span>  lst[i]=lst[i<span class="number">-1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=n+m;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line">		<span class="keyword">if</span>(d[i])  nxt[i]=i;<span class="comment">//计算自己后面的第一个司机</span></span><br><span class="line">		<span class="keyword">else</span>  nxt[i]=nxt[i<span class="number">+1</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(d[i])  <span class="keyword">continue</span>;<span class="comment">//分情况讨论计算答案</span></span><br><span class="line">		<span class="keyword">if</span>(lst[i]==<span class="number">0</span>)  t=nxt[i];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(nxt[i]==<span class="number">0</span>)  t=lst[i];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(pos[i]-pos[lst[i]]&lt;=pos[nxt[i]]-pos[i])  t=lst[i];</span><br><span class="line">		<span class="keyword">else</span>  t=nxt[i];</span><br><span class="line">		ans[t]++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+m;i++)</span><br><span class="line">		<span class="keyword">if</span>(d[i])  <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,ans[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ywb-33.github.io/2024/08/01/CF1075B%E9%A2%98%E8%A7%A3/" data-id="clznplwvt0003hcajgs5j2w28" data-title="CF1075B题解" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag">题解</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/08/01/CF958F1%E9%A2%98%E8%A7%A3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          CF958F1题解
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/07/31/CF413B%E9%A2%98%E8%A7%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">CF413B题解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag">题解</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E9%A2%98%E8%A7%A3/" style="font-size: 20px;">题解</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/08/03/CF644B%E9%A2%98%E8%A7%A3/">CF644B题解</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/02/CF405B%E9%A2%98%E8%A7%A3/">CF405B题解</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/02/CF1031B%E9%A2%98%E8%A7%A3/">CF1031B题解</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/01/CF958F1%E9%A2%98%E8%A7%A3/">CF958F1题解</a>
+          </li>
+        
+          <li>
+            <a href="/2024/08/01/CF1075B%E9%A2%98%E8%A7%A3/">CF1075B题解</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 YuWenbo<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
